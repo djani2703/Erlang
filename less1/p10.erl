@@ -3,7 +3,7 @@
 
 
 encode([]) ->
-    [{}];
+    [];
 
 encode([X|Xs]) ->
     start_encode([X|Xs], X, 0).
