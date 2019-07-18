@@ -6,9 +6,10 @@
 decode(JSON, proplist) ->
     decode(JSON, [], <<>>, [], [], proplist).
     
-decode(<<>>, Stack, _AccBin, _AccCurr, AccFin, proplist) ->
-    {Stack, AccFin};
-
+    
+decode(<<>>, _, _, _, AccFin, proplist) ->
+    AccFin;
+     
      
 decode(<<"{"/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
     case length(Stack) of
@@ -19,7 +20,7 @@ decode(<<"{"/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
             case lists:nth(1, Stack) of
                 "[" ->
                     decode(<<"{"/utf8, Rest/binary>>, ["fb"|Stack], AccBin, AccCurr, AccFin, proplist);
-                _   ->
+                _ ->
                     [Rest1, AccFin1] = decode(Rest, ["{"|Stack], <<>>, [], [], proplist),
                     decode(Rest1, Stack, AccBin, [AccFin1|AccCurr], AccFin, proplist)
             end
@@ -47,7 +48,7 @@ decode(<<"]"/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
             decode(<<"]"/utf8, Rest/binary>>, tl(Stack), <<>>, [], lists:reverse([AccBin|AccCurr]), proplist);
         "fb" -> 
             decode(<<"]"/utf8, Rest/binary>>, tl(Stack), <<>>, [], lists:reverse(AccCurr), proplist);
-        _    ->
+        _ ->
             [Rest, AccFin]
     end;
     
@@ -60,7 +61,7 @@ decode(<<","/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
             decode(Rest, Stack, <<>>, [AccBin|AccCurr], AccFin, proplist);
         "#"  ->
             decode(Rest, tl(Stack), <<>>, [], [list_to_tuple(lists:reverse([to_object(AccBin)|AccCurr]))|AccFin], proplist);
-        _    ->
+        _ ->
             decode(Rest, Stack, <<>>, [], [list_to_tuple(lists:reverse([AccBin|AccCurr]))|AccFin], proplist)
     end;
  
@@ -73,18 +74,18 @@ decode(<<" "/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
     case lists:nth(1, Stack) of
         "'" ->
             decode(Rest, Stack, <<AccBin/binary, " "/utf8>>, AccCurr, AccFin, proplist);
-        _   ->
+        _ ->
             decode(Rest, Stack, AccBin, AccCurr, AccFin, proplist)
     end;
  
  
 decode(<<"'"/utf8, Rest/binary>>, Stack, AccBin, AccCurr, AccFin, proplist) ->
     case lists:nth(1, Stack) of
-        "["  ->
+        "[" ->
             decode(<<"'"/utf8, Rest/binary>>, ["sq"|Stack], AccBin, AccCurr, AccFin, proplist);
-        "'"  ->
+        "'" ->
             decode(Rest, tl(Stack), AccBin, AccCurr, AccFin, proplist);
-        _    ->
+        _ ->
             decode(Rest, ["'"|Stack], AccBin, AccCurr, AccFin, proplist)
     end; 
  
