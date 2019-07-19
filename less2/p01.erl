@@ -7,6 +7,3 @@ last([X|[]]) ->
 
 last([_|Xs]) ->
     last(Xs).
-
-
--endif.
