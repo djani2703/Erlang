@@ -8,12 +8,13 @@ is_palindrome(L) ->
     L == reverse(L).
 
     
-is_palindrome_test() ->
-    ?assertEqual(is_palindrome("test"), false),
-    ?assertEqual(is_palindrome("helleh"), true),
-    ?assertEqual(is_palindrome([1, 'a', "hello", <<"bin">>]), false),
-    ?assertEqual(is_palindrome([125, 'b', "qwerty", 'b', 125]), true),
-    ?assertException(error, function_clause, is_palindrome(<<"bin">>)),
-    ?assertException(error, function_clause, is_palindrome({})), 
-    ?assertException(error, function_clause, is_palindrome(atom)),
-    ?assertException(error, function_clause, is_palindrome(125)).
+is_palindrome_test_() -> [
+    ?_assertEqual(is_palindrome("test"), false),
+    ?_assertEqual(is_palindrome("helleh"), true),
+    ?_assertEqual(is_palindrome([1, 'a', "hello", <<"bin">>]), false),
+    ?_assertEqual(is_palindrome([125, 'b', "qwerty", 'b', 125]), true),
+    ?_assertException(error, function_clause, is_palindrome(<<"bin">>)),
+    ?_assertException(error, function_clause, is_palindrome({})), 
+    ?_assertException(error, function_clause, is_palindrome(atom)),
+    ?_assertException(error, function_clause, is_palindrome(125))
+    ].

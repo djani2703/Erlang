@@ -26,11 +26,12 @@ encode_modified([X|Xs], Y, Cnt) ->
     [{Cnt, Y}|encode_modified(Xs, X, 1)].
 
 
-encode_modified_test() ->
-    ?assertEqual(encode_modified([a, a, a, b, c, c, d, d, d, e]), [{3, a}, b, {2, c}, {3, d}, e]),
-    ?assertEqual(encode_modified("hello"), [104, 101, {2, 108}, 111]),
-    ?assertEqual(encode_modified([]), []),
-    ?assertException(error, function_clause, encode_modified(<<"test">>)),
-    ?assertException(error, function_clause, encode_modified({})), 
-    ?assertException(error, function_clause, encode_modified(atom)),
-    ?assertException(error, function_clause, encode_modified(12)).
+encode_modified_test_() -> [
+    ?_assertEqual(encode_modified([a, a, a, b, c, c, d, d, d, e]), [{3, a}, b, {2, c}, {3, d}, e]),
+    ?_assertEqual(encode_modified("hello"), [104, 101, {2, 108}, 111]),
+    ?_assertEqual(encode_modified([]), []),
+    ?_assertException(error, function_clause, encode_modified(<<"test">>)),
+    ?_assertException(error, function_clause, encode_modified({})), 
+    ?_assertException(error, function_clause, encode_modified(atom)),
+    ?_assertException(error, function_clause, encode_modified(12))
+    ].

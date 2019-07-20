@@ -24,11 +24,12 @@ flatten([X|Xs], Acc) ->
     flatten(Xs, [X|Acc]).
 
     
-flatten_test() ->
-    ?assertEqual(flatten("hello"), "hello"),
-    ?assertEqual(flatten([atom, [8, [123, 'b']], 145, 'w']), [atom, 8, 123, 'b', 145, 'w']),
-    ?assertEqual(flatten([a, [134, 'b', ['c' ,[18, 55]], 35], 90]), [a, 134, b, c, 18, 55, 35, 90]),
-    ?assertException(error, function_clause, flatten(<<"bin">>)),
-    ?assertException(error, function_clause, flatten({})), 
-    ?assertException(error, function_clause, flatten(atom)),
-    ?assertException(error, function_clause, flatten(125)).
+flatten_test_() -> [
+    ?_assertEqual(flatten("hello"), "hello"),
+    ?_assertEqual(flatten([atom, [8, [123, 'b']], 145, 'w']), [atom, 8, 123, 'b', 145, 'w']),
+    ?_assertEqual(flatten([a, [134, 'b', ['c' ,[18, 55]], 35], 90]), [a, 134, b, c, 18, 55, 35, 90]),
+    ?_assertException(error, function_clause, flatten(<<"bin">>)),
+    ?_assertException(error, function_clause, flatten({})), 
+    ?_assertException(error, function_clause, flatten(atom)),
+    ?_assertException(error, function_clause, flatten(125))
+    ].

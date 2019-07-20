@@ -14,11 +14,12 @@ reverse([X|Xs], Acc) ->
     reverse(Xs, [X|Acc]).
 
     
-reverse_test() ->
-    ?assertEqual(reverse([]), []),
-    ?assertEqual(reverse([99, "test", 'a', <<"bin">>]), [<<"bin">>, 'a', "test", 99]),
-    ?assertEqual(reverse("qwerty"), "ytrewq"),
-    ?assertException(error, function_clause, reverse(<<"bin">>)),
-    ?assertException(error, function_clause, reverse({})), 
-    ?assertException(error, function_clause, reverse(atom)),
-    ?assertException(error, function_clause, reverse(125)).
+reverse_test_() -> [
+    ?_assertEqual(reverse([]), []),
+    ?_assertEqual(reverse([99, "test", 'a', <<"bin">>]), [<<"bin">>, 'a', "test", 99]),
+    ?_assertEqual(reverse("qwerty"), "ytrewq"),
+    ?_assertException(error, function_clause, reverse(<<"bin">>)),
+    ?_assertException(error, function_clause, reverse({})), 
+    ?_assertException(error, function_clause, reverse(atom)),
+    ?_assertException(error, function_clause, reverse(125))
+    ].

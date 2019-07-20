@@ -21,11 +21,12 @@ compress([X1|Xs], X, Acc) ->
     compress(Xs, X1, [X|Acc]).
 
     
-compress_test() ->
-    ?assertEqual(compress([a, a, a, b, c, c, d, d, d, e]), [a, b, c, d, e]),
-    ?assertEqual(compress("hello"), "helo"),
-    ?assertEqual(compress([]), []),
-    ?assertException(error, function_clause, compress(<<"bin">>)),
-    ?assertException(error, function_clause, compress({})), 
-    ?assertException(error, function_clause, compress(atom)),
-    ?assertException(error, function_clause, compress(125)).
+compress_test_() -> [
+    ?_assertEqual(compress([a, a, a, b, c, c, d, d, d, e]), [a, b, c, d, e]),
+    ?_assertEqual(compress("hello"), "helo"),
+    ?_assertEqual(compress([]), []),
+    ?_assertException(error, function_clause, compress(<<"bin">>)),
+    ?_assertException(error, function_clause, compress({})), 
+    ?_assertException(error, function_clause, compress(atom)),
+    ?_assertException(error, function_clause, compress(125))
+    ].

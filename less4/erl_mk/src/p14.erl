@@ -10,10 +10,11 @@ duplicate([X|Xs]) ->
     [X, X|duplicate(Xs)].
 
 
-duplicate_test() ->
-    ?assertEqual(duplicate([<<>>, atom, 5, {a, b}, [elm]]), [<<>>,<<>>,atom,atom,5,5,{a,b},{a,b},[elm],[elm]]),
-    ?assertEqual(duplicate([]), []),
-    ?assertException(error, function_clause, duplicate(<<"bin">>)),
-    ?assertException(error, function_clause, duplicate({})), 
-    ?assertException(error, function_clause, duplicate(atom)),
-    ?assertException(error, function_clause, duplicate(12)).
+duplicate_test_() -> [
+    ?_assertEqual(duplicate([<<>>, atom, 5, {a, b}, [elm]]), [<<>>,<<>>,atom,atom,5,5,{a,b},{a,b},[elm],[elm]]),
+    ?_assertEqual(duplicate([]), []),
+    ?_assertException(error, function_clause, duplicate(<<"bin">>)),
+    ?_assertException(error, function_clause, duplicate({})), 
+    ?_assertException(error, function_clause, duplicate(atom)),
+    ?_assertException(error, function_clause, duplicate(12))
+    ].
