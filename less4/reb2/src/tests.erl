@@ -18,7 +18,6 @@ to_object_test_() -> [
     ?_assertException(error, function_clause, to_object(12))
 ].
 
-
 %bs01 module test:
 first_word_test_() -> [
     ?_assertEqual(first_word(<<"          text">>), <<"text">>),
@@ -31,7 +30,6 @@ first_word_test_() -> [
     ?_assertException(error, function_clause, first_word(atom)),
     ?_assertException(error, function_clause, first_word(12))
 ].
-
 
 %bs02 module test:
 words_test_() -> [
@@ -56,7 +54,6 @@ split_test_() -> [
     ?_assertEqual(split(atom, "--"), {error, not_a_binary}),
     ?_assertEqual(split(125, "//"), {error, not_a_binary})
 ].
-
 
 %bs04 module test:
 decode_test_() -> [
