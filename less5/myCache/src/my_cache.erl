@@ -11,8 +11,8 @@ create(TableName) ->
         ets:new(TableName, [set, named_table]),
         ok
     catch 
-        error:system_limit ->
-            {error, undefined_table}
+        error:badarg ->
+            {error, table_already_created}
     end.
     
     
