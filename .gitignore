@@ -1,2 +1,2 @@
-less*/*.beam
-less*/erl_crash.dump
+Part*/*/*.beam
+Part*/*/erl_crash.dump
